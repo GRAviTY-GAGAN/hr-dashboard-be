@@ -11,17 +11,22 @@ authRouter.route("/login").post(userLogin);
 
 async function userSign(req, res) {
   console.log(req.body, "data recieved");
-  let data = req.body;
-  data.id = ++NEWEMPID;
+  try {
+    let data = req.body;
+    data.id = ++NEWEMPID;
 
-  console.log("new User ---> ", data);
+    // console.log("new User ---> ", data);
 
-  // let newUser = await UserModel.create(data);
-  let newUser = new UserModel(data);
-  await newUser.save();
-  console.log(newUser);
-  // res.end("Data has came");
-  res.json(newUser);
+    // let newUser = await UserModel.create(data);
+    let newUser = new UserModel(data);
+    await newUser.save();
+    // console.log(newUser);
+    // res.end("Data has came");
+    res.json(newUser);
+  } catch (error) {
+    console.log({ error: error.message }, "HERE");
+    res.status(400).json({ msg: error.message });
+  }
 }
 
 async function userLogin(req, res) {

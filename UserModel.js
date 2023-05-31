@@ -40,6 +40,7 @@ let userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   password: {
     type: String,
@@ -193,7 +194,7 @@ let todoModale = new mongoose.Schema({
 // Using Leave to Manage leaves of employees.
 // HR-Dashboard is to manage all user data.
 const LeaveModel = mongoose.model("Leave", leaveModel);
-const UserModel = mongoose.model("HR-Dashboard", userSchema);
+const UserModel = mongoose.model("user", userSchema);
 const UserTaskModel = mongoose.model("User-Task", userTaskUpdate);
 
 module.exports = { UserModel, LeaveModel, UserTaskModel };
