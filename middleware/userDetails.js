@@ -1,8 +1,10 @@
 function userAuth(req, res, next) {
-  console.log("COMMING FROM SIGNUP");
   const { phoneNumber } = req.body;
-  console.log(phoneNumber + "PHONE", req.body);
-  next();
+  if (phoneNumber.length !== 10) {
+    res.status(400).json({ msg: "Please enter proper phone number" });
+  } else {
+    next();
+  }
 }
 
 module.exports = { userAuth };
