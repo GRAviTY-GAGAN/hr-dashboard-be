@@ -17,7 +17,6 @@ app.use(cors(corsOptions));
 // app.use(cors()); suggestion by Amaan
 
 app.use(express.json());
-app.use(userAuth);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
