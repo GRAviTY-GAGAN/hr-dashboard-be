@@ -179,17 +179,6 @@ let userTaskUpdate = new mongoose.Schema([
   },
 ]);
 
-let todoModale = new mongoose.Schema({
-  employeId: {
-    type: String,
-  },
-  todoArr: [
-    {
-      isdone: Boolean,
-    },
-  ],
-});
-
 // creating model with name HR-Dashboard and Leave in cluster0
 // Using Leave to Manage leaves of employees.
 // HR-Dashboard is to manage all user data.
