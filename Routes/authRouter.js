@@ -1,5 +1,7 @@
 const bcrypt = require("bcrypt");
 const express = require("express");
+const nodemailer = require("nodemailer");
+require("dotenv").config();
 const { UserModel } = require("../Models/UserModel");
 const { userAuth } = require("../middleware/userDetails");
 
@@ -7,16 +9,93 @@ let NEWEMPID = 150;
 
 const authRouter = express.Router();
 
+authRouter.post("/forgotPassword", async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const user = await UserModel.findOne({ email });
+
+    const html = `<h1>Forgot password?</h1>
+  <p><a href=http://localhost:3000/resetPass/${user._id}>Click here</a> to reset your password.</p>
+  
+  `;
+
+    if (!user) {
+      return res
+        .status(401)
+        .json({ msg: "No user found with this email address" });
+    }
+
+    // setting up the transporter
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.USER_EMAIL,
+        pass: process.env.USER_PASS,
+      },
+    });
+
+    // Compose the email
+    const mailOptions = {
+      from: process.env.USER_EMAIL,
+      to: email,
+      subject: "Password Reset Request",
+      html: html,
+    };
+
+    // Send the email
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        return res
+          .status(500)
+          .send({ message: "Error sending email", err: err.message });
+      }
+
+      return res.status(200).send({ message: "Password reset email sent" });
+    });
+  } catch (error) {
+    res.status(401).json({ msg: "No user found with this email address" });
+  }
+});
+
+authRouter.post("/resetPassword/:id", async (req, res) => {
+  console.log(req.body, req.params);
+  const { password } = req.body;
+  const { id } = req.params;
+
+  try {
+    bcrypt.hash(password, 5, async (err, hash) => {
+      if (err) {
+        return res.status(400).json({ msg: err.message + "BCRYPT" });
+      }
+      const user = await UserModel.findByIdAndUpdate(
+        { _id: id },
+        { password: hash, confirmPassword: hash }
+      );
+
+      const findUser = await UserModel.findById({ _id: id });
+
+      res.json({ msg: findUser });
+    });
+  } catch (error) {
+    res.status(400).json({ msg: "Something went wrong. Please try again!!" });
+  }
+});
+
 // authRouter.route("/signup").post(userSign);
 authRouter.route("/login").post(userLogin);
 
 authRouter.post("/signup", userAuth, async (req, res) => {
-  console.log(req.body, "data recieved");
+  // console.log(req.body, "data recieved");
   try {
     bcrypt.hash(req.body.password, 5, async (err, hash) => {
       let data = req.body;
       data.id = ++NEWEMPID;
-      let newUser = new UserModel({ ...data, password: hash });
+      let newUser = new UserModel({
+        ...data,
+        password: hash,
+        confirmPassword: hash,
+      });
       await newUser.save();
       res.json(newUser);
     });
