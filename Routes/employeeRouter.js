@@ -1,5 +1,5 @@
 const express = require("express");
-const { UserModel, UserTaskModel } = require("../UserModel");
+const { UserModel, UserTaskModel } = require("../Models/UserModel");
 
 const employeeRouter = express.Router();
 

@@ -1,7 +1,5 @@
 const express = require("express");
-
-const { LeaveModel } = require("../UserModel");
-const { UserModel } = require("../UserModel");
+const { UserModel, LeaveModel } = require("../Models/UserModel");
 
 const adminRouter = express.Router();
 
@@ -25,7 +23,6 @@ adminRouter.route("/leave/:id").post(updateRejectionMessage);
 // should approve and make changes in
 // leaves taken in the month & leaves taken in the year
 adminRouter.route("/leave/approve/:id").post(approveRequest);
-
 
 // Performance Message and shift update and bug of leave management.
 adminRouter.route("/shift/:id").post(updateEmployeeShift);

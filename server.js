@@ -1,12 +1,14 @@
 const express = require("express");
 const app = express();
-const { UserModel } = require("./UserModel");
+// const { UserModel } = require("./UserModel");
+const { UserModel } = require("./Models/UserModel");
 const authRouter = require("./Routes/authRouter");
 const adminRouter = require("./Routes/adminRouter");
 const employeeRouter = require("./Routes/employeeRouter");
 
 const cors = require("cors");
 const { userAuth } = require("./middleware/userDetails");
+
 const corsOptions = {
   origin: "*",
   credentials: true, //access-control-allow-credentials:true
