@@ -3,17 +3,6 @@ const mongoose = require("mongoose");
 // Link to connect to mongo db atlas
 // let dbLink =
 //   "mongodb+srv://shindenimish:nimish2310@cluster0.pn6ecqh.mongodb.net/?retryWrites=true&w=majority";
-let dbLink = "mongodb+srv://gagan:gagan@cluster0.jwtqx79.mongodb.net/hrApp";
-
-// Setting up basic connect
-mongoose
-  .connect(dbLink)
-  .then(() => {
-    console.log("Connected 🥳");
-  })
-  .catch((err) => {
-    console.log(err, "Not Connected 😢");
-  });
 
 // Schema for all Employees
 let userSchema = new mongoose.Schema({
@@ -85,7 +74,7 @@ let userSchema = new mongoose.Schema({
   },
   performanceOfPerviousMonth: {
     type: Number,
-    default: 100,
+    default: 0,
   },
   performanceMessage: {
     type: String,

@@ -1,6 +1,16 @@
 const mongoose = require("mongoose");
 
-let todoSchema = new mongoose.Schema({
-  employeId: { type: String },
-  todoArr: { type: Array },
-});
+const todoSchema = mongoose.Schema(
+  {
+    empID: { type: String },
+    empName: { type: String },
+    title: { type: String },
+    desc: { type: String },
+    date: { type: String },
+  },
+  { versionKey: false }
+);
+
+const TodoModel = mongoose.model("todo", todoSchema);
+
+module.exports = { TodoModel };
