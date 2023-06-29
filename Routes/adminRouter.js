@@ -132,7 +132,7 @@ async function allLeaves(req, res) {
   // console.log("Request has came");
   try {
     let allleaves = await LeaveModel.find();
-    if (allleaves) console.log("data has came", allleaves);
+    // if (allleaves) console.log("data has came", allleaves);
     return res.json(allleaves);
   } catch (error) {
     console.log("error message -->> ", error);
