@@ -8,6 +8,8 @@ const employeeRouter = require("./Routes/employeeRouter");
 
 const cors = require("cors");
 const { userAuth } = require("./middleware/userDetails");
+const { connection } = require("./db");
+const { todoRouter } = require("./Routes/todoRoutes");
 
 const corsOptions = {
   origin: "*",
@@ -21,10 +23,17 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log("Active at port 5000");
+app.listen(PORT, async () => {
+  try {
+    await connection;
+    console.log("Active at port 5000");
+    console.log("DB Connected 🚀.");
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 app.use("/auth", authRouter);
 app.use("/admin", adminRouter);
 app.use("/employee", employeeRouter);
+app.use("/todo", todoRouter);

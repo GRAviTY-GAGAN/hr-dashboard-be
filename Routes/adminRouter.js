@@ -72,10 +72,11 @@ async function updatePerformance(req, res) {
   let empId = req.params.id;
   let dataObj = req.body;
 
-  console.log(dataObj.performanceMessage);
-  console.log(dataObj.performanceScore);
+  // console.log(dataObj.performanceMessage);
+  // console.log(dataObj.performanceScore);
 
   let performanceScore = Math.ceil((dataObj.performanceScore / 30) * 100);
+  // console.log(performanceScore, "PERFORMSCORE");
 
   let responseObj = await UserModel.findOneAndUpdate(
     { id: empId },
@@ -95,7 +96,7 @@ async function updatePerformanceScore(req, res) {
   let empId = req.params.id;
   let dataObj = req.body;
 
-  console.log(dataObj.performanceScore);
+  // console.log(dataObj.performanceScore);
 
   let performanceScore = Math.ceil((dataObj.performanceScore / 40) * 100);
 
@@ -119,7 +120,7 @@ async function getDeparatmentbyId(req, res) {
   let departmentName = req.params.id;
   try {
     let allUser = await UserModel.find({ deparatment: departmentName });
-    console.log(allUser);
+    // console.log(allUser);
     res.json(allUser);
   } catch (error) {
     console.log(error.message);
@@ -128,7 +129,7 @@ async function getDeparatmentbyId(req, res) {
 
 // <--------All Leave Request---------------------------------------------------------------------------->
 async function allLeaves(req, res) {
-  console.log("Request has came");
+  // console.log("Request has came");
   try {
     let allleaves = await LeaveModel.find();
     if (allleaves) console.log("data has came", allleaves);
@@ -139,7 +140,7 @@ async function allLeaves(req, res) {
 }
 
 async function addLeave(req, res) {
-  console.log("Data Came from post method Leave", req.body);
+  // console.log("Data Came from post method Leave", req.body);
   let data = req.body;
   let addnewLeave = await LeaveModel.create(data, { new: true });
   res.send(addnewLeave);
@@ -147,11 +148,11 @@ async function addLeave(req, res) {
 
 async function getLeavesFromEmpId(req, res) {
   let empId = req.params.id;
-  console.log("Employee Id send from Frontend", empId);
+  // console.log("Employee Id send from Frontend", empId);
 
   try {
     let response = await LeaveModel.find({ employeId: empId });
-    if (response) console.log(response, "data from getleavesfromempid");
+    // if (response) console.log(response, "data from getleavesfromempid");
     return res.json(response);
   } catch (error) {
     console.log(error);
@@ -167,7 +168,7 @@ async function updateRejectionMessage(req, res) {
     let uniqueLeaveId = req.params.id;
     let messageORejection = req.body.reasonOfRejection;
     // uiqLevId = c888e41f-f463-47b9-824d-daed20061f13
-    console.log("empId from rejection", uniqueLeaveId);
+    // console.log("empId from rejection", uniqueLeaveId);
     // console.log("MessageOfRejection",  messageORejection.rejectionMessage);
     // console.log("MessageOfRejection", messageORejection);
 
@@ -183,7 +184,7 @@ async function updateRejectionMessage(req, res) {
       }
     );
 
-    console.log(responseObj);
+    // console.log(responseObj);
     return res.json(responseObj);
   } catch (error) {
     console.log(error);
@@ -198,7 +199,7 @@ async function approveRequest(req, res) {
       { $set: { isApproved: true, isPending: false } },
       { new: true }
     ).then((responseObj) => {
-      console.log("responseFromApproveRequest", responseObj.employeId);
+      // console.log("responseFromApproveRequest", responseObj.employeId);
       UserModel.findOne({ id: responseObj.employeId }).then((ress) => {
         let paidLeavesUpdate;
         let leavesTakenInMonthUpdate;
