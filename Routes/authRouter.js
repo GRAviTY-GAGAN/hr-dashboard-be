@@ -102,7 +102,8 @@ authRouter.post("/signup", userAuth, async (req, res) => {
   try {
     bcrypt.hash(req.body.password, 5, async (err, hash) => {
       let data = req.body;
-      data.id = ++NEWEMPID;
+      let count = await UserModel.countDocuments();
+      data.id = NEWEMPID + count;
       let newUser = new UserModel({
         ...data,
         password: hash,
