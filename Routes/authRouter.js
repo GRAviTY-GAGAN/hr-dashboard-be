@@ -111,7 +111,7 @@ authRouter.post("/signup", userAuth, async (req, res) => {
       });
       await newUser.save();
       res.statusMessage = "Success";
-      res.json(newUser);
+      res.json({ newUser, msg: "Success" });
     });
   } catch (error) {
     let msg = { msg: error.message };
