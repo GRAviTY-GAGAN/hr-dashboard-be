@@ -137,7 +137,7 @@ employeeRouter.post("/issues", tokenVerifier, async (req, res) => {
     const newIssue = new IssueModel({ issue, empID, empName });
     await newIssue.save();
     res.statusMessage = "Saved";
-    res.json({ issue });
+    res.json({ msg: "Success", issue });
   } catch (error) {
     res.json({ error: error.message });
   }
