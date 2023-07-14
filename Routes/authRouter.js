@@ -18,7 +18,7 @@ authRouter.post("/forgotPassword", async (req, res) => {
     const user = await UserModel.findOne({ email });
 
     const html = `<h1>Forgot password?</h1>
-  <p><a href=http://localhost:3000/resetPass/${user._id}>Click here</a> to reset your password.</p>
+  <p><a href=https://hr-dashboard-app.netlify.app/resetPass/${user._id}>Click here</a> to reset your password.</p>
   
   `;
 
