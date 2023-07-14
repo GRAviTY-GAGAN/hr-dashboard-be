@@ -41,7 +41,7 @@ todoRouter.delete("/:id", async (req, res) => {
   try {
     const todos = await TodoModel.findOneAndDelete({ _id: id }, { new: true });
     res.statusMessage = "Success";
-    res.json({ todos });
+    res.json({ msg: "Success", todos });
   } catch (error) {
     res.status(404).json({ error });
   }
